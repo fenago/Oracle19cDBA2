@@ -293,4 +293,75 @@ After setting up a CDB and multiple PDBs, the next logical step in database admi
 ## Summary:
 In this lab, you learned how to create and manage tablespaces within both CDB and PDB environments. You defined default tablespaces, created temporary tablespaces, and implemented Oracle Managed Files (OMF) for automated file management. These skills are crucial for managing storage within an Oracle Database environment.
 
+### Addendum: Understanding and Verifying Tablespaces in Oracle Databases
+
+#### Objectives:
+- To deepen your understanding of tablespaces and their role within Oracle Databases.
+- To explore the file locations associated with tablespaces.
+- To validate and verify tablespace settings using SQL Developer and SQL*Plus.
+
+#### Introduction to Tablespaces
+Tablespaces in Oracle databases are logical storage units that group related data files, helping in organizing and managing the storage of database objects such as tables and indexes. Tablespaces allow for the segregation of data, making it easier to manage different segments of the database. Each tablespace can consist of one or more data files, which physically store the database's data.
+
+#### Navigating and Understanding Tablespace Files
+
+1. **Understanding Tablespace Structure:**
+   - A **tablespace** in an Oracle database is a collection of one or more data files.
+   - These data files are stored on the disk and are essential for the physical storage of database objects.
+   - Tablespaces are classified into **permanent tablespaces** (for storing persistent data), **temporary tablespaces** (for storing temporary data like sorting operations), and **undo tablespaces** (for managing transaction rollbacks).
+
+2. **Navigating to Tablespace Files:**
+   - Tablespace files are typically located in a specific directory on the Oracle database server.
+   - Based on the lab instructions, the tablespace files for `CDBLAB` and `PDBLAB1` are located in `/u01/app/oracle/oradata/CDBLAB/`.
+   - Using a command line or terminal, you can navigate to this directory to view the files:
+     ```bash
+     cd /u01/app/oracle/oradata/CDBLAB/
+     ls -l
+     ```
+   - Observe the list of `.dbf` files corresponding to the tablespaces you have created. These are the data files physically storing your database's data.
+
+#### Verifying Tablespace Settings
+
+3. **Validating Tablespaces using SQL Developer:**
+   - **Step 1:** Open SQL Developer and connect to `CDBLAB` and `PDBLAB1`.
+   - **Step 2:** In the **Connections** pane, select your connection and open a **SQL Worksheet**.
+   - **Step 3:** Execute the following SQL commands to verify the tablespace settings:
+     ```sql
+     -- View all tablespaces in CDBLAB
+     SELECT tablespace_name, status FROM dba_tablespaces;
+
+     -- View data files associated with tablespaces
+     SELECT file_name, tablespace_name FROM dba_data_files;
+
+     -- Verify default tablespace in CDBLAB
+     SELECT PROPERTY_VALUE FROM DATABASE_PROPERTIES WHERE PROPERTY_NAME='DEFAULT_PERMANENT_TABLESPACE';
+     ```
+   - **Step 4:** Review the output to ensure that the tablespaces are correctly created and configured.
+
+4. **Validating Tablespaces using SQL*Plus:**
+   - **Step 1:** Open a terminal and connect to SQL*Plus as the `oracle` user.
+   - **Step 2:** Connect to the `CDBLAB` and `PDBLAB1` databases:
+     ```sql
+     CONNECT system@CDBLAB
+     ```
+   - **Step 3:** Execute the same SQL commands as in SQL Developer to verify the tablespace settings:
+     ```sql
+     SELECT tablespace_name, status FROM dba_tablespaces;
+     SELECT file_name, tablespace_name FROM dba_data_files;
+     SELECT PROPERTY_VALUE FROM DATABASE_PROPERTIES WHERE PROPERTY_NAME='DEFAULT_PERMANENT_TABLESPACE';
+     ```
+   - **Step 4:** Ensure that all the tablespaces are present and correctly configured.
+
+#### Additional Exercise:
+- **Explore Datafile Sizes and Locations:**
+  Use the following command to explore the size and location of data files associated with each tablespace:
+  ```sql
+  SELECT file_name, tablespace_name, bytes/1024/1024 AS size_mb FROM dba_data_files;
+  ```
+  - This query will provide you with the size of each data file in megabytes, allowing you to understand the storage allocation for each tablespace.
+
+#### Conclusion:
+Understanding tablespaces is crucial for effective database management. By navigating the filesystem where the tablespace files are stored and verifying their settings through SQL Developer and SQL*Plus, you gain practical experience that is essential for managing Oracle Databases in real-world environments.
+
+This addendum to the lab ensures that you not only create and configure tablespaces but also understand their underlying structure and how to manage them effectively.
 
