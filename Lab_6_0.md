@@ -209,3 +209,131 @@ Continuous monitoring for suspicious activity is essential for detecting and res
 In this lab, you learned how to enable unified auditing, create and manage audit policies, maintain the audit trail, restrict access to sensitive data, authenticate users, and monitor for suspicious activities in Oracle 19c. These steps are critical for ensuring that your database environment is secure, compliant, and capable of detecting and responding to potential threats.
 
 By following these steps, you can implement a robust auditing framework that provides comprehensive oversight of your database activities, ensuring the integrity, confidentiality, and availability of your data.
+
+### Addendum to Lab_6_0: Purging Audit Trail Records in Oracle 19c
+
+As part of maintaining your audit trail, it is essential to periodically purge old records to manage storage space and ensure optimal database performance. This addendum will guide you through the steps to automate and manually purge audit trail records in Oracle 19c.
+
+---
+
+### **Steps to Purge Audit Trail Records**
+
+#### **1. Scheduling an Automatic Purge Job**
+
+**Why:**
+Automating the purging of audit trail records helps maintain the audit logs at manageable levels without requiring manual intervention, ensuring the database remains optimized.
+
+**Steps:**
+
+1. **Connect to CDBLAB as SYSDBA:**
+   - Use SQL Developer or SQL*Plus:
+   ```sql
+   CONNECT sys@CDBLAB AS sysdba;
+   ```
+
+2. **Create an Automatic Purge Job:**
+   - Run the following command to schedule an automatic purge job:
+   ```sql
+   BEGIN
+      DBMS_AUDIT_MGMT.CREATE_PURGE_JOB(
+         AUDIT_TRAIL_TYPE          => DBMS_AUDIT_MGMT.AUDIT_TRAIL_UNIFIED,
+         AUDIT_TRAIL_PURGE_INTERVAL => 12,
+         AUDIT_TRAIL_PURGE_NAME     => 'audit_trail_pj',
+         USE_LAST_ARCH_TIMESTAMP    => TRUE,
+         CONTAINER                  => DBMS_AUDIT_MGMT.CONTAINER_CURRENT
+      );
+   END;
+   /
+   ```
+   - **Explanation:**
+     - `AUDIT_TRAIL_TYPE`: Specifies the type of audit trail to purge (Unified Auditing).
+     - `AUDIT_TRAIL_PURGE_INTERVAL`: Sets the interval (in hours) at which the purge job runs.
+     - `AUDIT_TRAIL_PURGE_NAME`: A name for the purge job.
+     - `USE_LAST_ARCH_TIMESTAMP`: Ensures only records older than the last archive timestamp are purged.
+     - `CONTAINER`: Specifies whether to apply the purge to the current container or all containers.
+
+3. **Verify the Job Creation:**
+   - Run the following query to check if the purge job has been created successfully:
+   ```sql
+   SELECT JOB_NAME, STATUS FROM DBA_SCHEDULER_JOBS WHERE JOB_NAME = 'AUDIT_TRAIL_PJ';
+   ```
+   - **Explanation:**
+     - This query returns the status of the purge job, confirming that it has been scheduled correctly.
+
+#### **2. Manually Purging Audit Trail Records**
+
+**Why:**
+Manual purging allows for immediate removal of audit trail records, which can be useful for addressing urgent storage issues or when preparing for a new audit cycle.
+
+**Steps:**
+
+1. **Connect to CDBLAB as SYSDBA:**
+   - Ensure you are connected as SYSDBA:
+   ```sql
+   CONNECT sys@CDBLAB AS sysdba;
+   ```
+
+2. **Manually Purge Audit Trail Records:**
+   - Execute the following command to manually purge the audit trail:
+   ```sql
+   BEGIN
+      DBMS_AUDIT_MGMT.CLEAN_AUDIT_TRAIL(
+         AUDIT_TRAIL_TYPE => DBMS_AUDIT_MGMT.AUDIT_TRAIL_UNIFIED
+      );
+   END;
+   /
+   ```
+   - **Explanation:**
+     - This command immediately removes the audit records from the unified audit trail.
+
+3. **Verify the Purge Operation:**
+   - Check the audit trail table to ensure the records have been purged:
+   ```sql
+   SELECT COUNT(*) FROM UNIFIED_AUDIT_TRAIL;
+   ```
+   - **Explanation:**
+     - This query returns the number of remaining records in the audit trail. A successful purge should result in a reduced count.
+
+---
+
+### **Challenge Section: Advanced Audit Trail Management**
+
+#### **Scenario:**
+Your organization is preparing for a significant audit, and you need to ensure that the audit trail is not only maintained but also managed effectively to avoid potential performance issues. The compliance team requires you to implement a solution that automatically purges audit records older than six months but retains specific records indefinitely for certain sensitive operations.
+
+---
+
+### **Challenge Tasks:**
+
+1. **Configure an Automatic Purge Job for Routine Records:**
+   - **Objective**: Set up an automatic purge job that removes all audit records older than six months.
+   - **Steps**:
+     1. Connect to CDBLAB.
+     2. Schedule an automatic purge job with a retention period of six months.
+     3. Verify the job creation and its scheduling interval.
+
+2. **Exclude Specific Audit Records from Being Purged:**
+   - **Objective**: Ensure that audit records related to the `SELECT` action on the `financial.transactions` table are never purged.
+   - **Steps**:
+     1. Identify the policy that audits `SELECT` actions on `financial.transactions`.
+     2. Modify the purge job or create a new policy that excludes these records from purging.
+     3. Verify the exclusion by attempting a manual purge and checking the retained records.
+
+3. **Manually Purge Urgent Audit Data:**
+   - **Objective**: Perform a manual purge of audit records older than one year to free up space before the audit.
+   - **Steps**:
+     1. Connect to CDBLAB.
+     2. Use the `DBMS_AUDIT_MGMT.CLEAN_AUDIT_TRAIL` procedure to purge records older than one year.
+     3. Confirm the purge by querying the audit trail and verifying the reduction in records.
+
+---
+
+### **Challenge Notes:**
+
+- **Task 1**: Ensure that the automatic purge job is set up correctly with the desired interval and retention period, balancing between compliance and performance.
+- **Task 2**: Pay attention to the audit policies and conditions you have in place, ensuring that critical records are retained as required by your organization's compliance policies.
+- **Task 3**: Use manual purging judiciously, especially before critical audits, to ensure the database remains performant while meeting audit requirements.
+
+---
+
+This addendum provides you with the tools to effectively manage and purge audit trail records in Oracle 19c. By completing the challenge tasks, you will demonstrate your ability to manage audit trails while adhering to strict compliance and performance standards.
