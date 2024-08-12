@@ -9,6 +9,23 @@
 ## Use Case:
 As your Oracle Database grows, managing storage effectively becomes increasingly important. This lab will guide you through advanced storage management techniques that help in optimizing space usage. You'll learn how to create private temporary tables for session-specific operations, use compression to reduce storage space, reclaim unused space in tables and indexes, and manage resumable space allocation to handle large transactions efficiently.
 
+**When and Where to Use Private Temporary Tables:**
+
+1. **Session-Specific Data Operations:**
+   - When you need to store intermediate results or perform operations that should not affect the overall database or be visible to other sessions, private temporary tables are ideal.
+   - Example: In reporting or data processing tasks where intermediate calculations or aggregations are needed only for the duration of a session.
+
+2. **Resource Isolation:**
+   - In multi-user environments where you want to ensure that operations in one session do not impact or interfere with other sessions, private temporary tables offer a way to maintain isolation.
+
+3. **Performance Optimization:**
+   - When working with large datasets where you need to perform multiple operations on a subset of data, private temporary tables allow you to store this subset in a temporary structure without committing the data to permanent storage, thereby optimizing performance.
+
+4. **Security and Privacy:**
+   - Since private temporary tables are not accessible by other sessions, they provide an added layer of security for sensitive operations that should not be exposed or retained after the session ends.
+
+These tables are particularly useful in Oracle 19c when the temporary data is session-specific and does not need to be shared or persisted beyond the session. They can be applied in use cases such as complex financial calculations, temporary data aggregation for reporting, or any scenario where you require temporary, isolated, session-specific storage.
+
 ## Prerequisites:
 - Completion of the previous lab (Lab 2) where you learned about creating and managing tablespaces.
 - Access to the Oracle Database system as the `oracle` user.
@@ -33,11 +50,28 @@ As your Oracle Database grows, managing storage effectively becomes increasingly
    2. In the **Connections** pane, right-click on `CDBLAB` or `PDBLAB1` and select **Connect**.
    3. Once connected, click on the **SQL Worksheet** icon to open a new worksheet.
    4. In the worksheet, execute the following SQL command to create a private temporary table:
-   ```sql
-   CREATE PRIVATE TEMPORARY TABLE ora$ptt_temp_table
-   ON COMMIT PRESERVE DEFINITION AS
-   SELECT * FROM employees;
-   ```
+      a. **Create the Private Temporary Table:**
+      ```sql
+      CREATE PRIVATE TEMPORARY TABLE ora$ptt_temp_table (
+          employee_id NUMBER,
+          first_name VARCHAR2(50),
+          last_name VARCHAR2(50),
+          email VARCHAR2(100),
+          phone_number VARCHAR2(20),
+          hire_date DATE,
+          job_id VARCHAR2(10),
+          salary NUMBER(8, 2),
+          manager_id NUMBER,
+          department_id NUMBER
+      ) ON COMMIT PRESERVE DEFINITION;
+      ```
+      b. **Populate the Table:**
+      ```sql
+      INSERT INTO ora$ptt_temp_table
+      SELECT employee_id, first_name, last_name, email, phone_number, hire_date, job_id, salary, manager_id, department_id
+      FROM employees;
+      ```
+
    5. Click the **Run Script** button (or press F5) to execute the command.
 
    **Using SQL*Plus:**
@@ -185,3 +219,10 @@ As your Oracle Database grows, managing storage effectively becomes increasingly
 
 ### 7. **Summary:**
 In this lab, you learned how to manage advanced storage operations within Oracle Databases. You explored the creation of private temporary tables, implemented data compression to save space, reclaimed wasted space using segment shrink functionality, and managed resumable space allocation for large transactions. These techniques are critical for maintaining an efficient and optimized database environment.
+
+
+
+
+
+
+
