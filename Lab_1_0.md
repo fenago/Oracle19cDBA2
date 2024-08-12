@@ -28,7 +28,8 @@ To stop all running databases and listeners, create a new CDB named `CDBLAB` wit
    lsnrctl stop
    ```
 
-   **Important:** Open new terminal and run these commands as **root** user:
+   # **Important:** Open new terminal and run these commands as **root** user:
+   ### If you skip these steps - you will be missing files and directories needed for future labs
 
    Make sure the `listener.ora` is created. If not, create it:
    ```sh
@@ -48,7 +49,7 @@ To stop all running databases and listeners, create a new CDB named `CDBLAB` wit
    lsnrctl start
    ```
 
-2. **Set Oracle Environment Variables**
+3. **Set Oracle Environment Variables**
 
    Set the Oracle environment variables using the `oraenv` script:
    ```sh
@@ -63,7 +64,7 @@ To stop all running databases and listeners, create a new CDB named `CDBLAB` wit
     export PATH=$ORACLE_HOME/bin:$PATH
     ```
 
-3. **Create a New CDB with Three PDBs Using DBCA**
+4. **Create a New CDB with Three PDBs Using DBCA**
 
    Use the following command to create a new CDB named `CDBLAB` with three PDBs (`PDBLAB1`, `PDBLAB2`, and `PDBLAB3`):
    ```sh
