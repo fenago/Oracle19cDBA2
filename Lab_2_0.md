@@ -35,7 +35,7 @@ After setting up a CDB and multiple PDBs, the next logical step in database admi
    4. In the worksheet, execute the following SQL command to create a tablespace:
    ```sql
    CREATE TABLESPACE tbs_CDBLAB_users
-   DATAFILE '/u01/app/oracle/oradata/cdblab/cdblab_users01.dbf' SIZE 20M;
+   DATAFILE '/u01/app/oracle/oradata/CDBLAB/cdblab_users01.dbf' SIZE 20M;
    ```
    5. Click the **Run Script** button (or press F5) to execute the command.
 
@@ -55,7 +55,7 @@ After setting up a CDB and multiple PDBs, the next logical step in database admi
    4. Execute the following command:
       ```sql
       CREATE TABLESPACE tbs_CDBLAB_users
-      DATAFILE '/u01/app/oracle/oradata/cdblab/cdblab_users01.dbf' SIZE 20M;
+      DATAFILE '/u01/app/oracle/oradata/CDBLAB/cdblab_users01.dbf' SIZE 20M;
       ```
 
    **In a PDB (e.g., PDBLAB1):**
@@ -66,7 +66,7 @@ After setting up a CDB and multiple PDBs, the next logical step in database admi
    3. Execute the following SQL command to create a tablespace:
    ```sql
    CREATE TABLESPACE tbs_PDBLAB1_users
-   DATAFILE '/u01/app/oracle/oradata/cdblab/pd1lab/pd1lab_users01.dbf' SIZE 20M;
+   DATAFILE '/u01/app/oracle/oradata/CDBLAB/pd1lab/pd1lab_users01.dbf' SIZE 20M;
    ```
    4. Click the **Run Script** button to execute.
 
@@ -78,7 +78,7 @@ After setting up a CDB and multiple PDBs, the next logical step in database admi
    2. Execute the following command:
       ```sql
       CREATE TABLESPACE tbs_PDBLAB1_users
-      DATAFILE '/u01/app/oracle/oradata/cdblab/pd1lab/pd1lab_users01.dbf' SIZE 20M;
+      DATAFILE '/u01/app/oracle/oradata/CDBLAB/pd1lab/pd1lab_users01.dbf' SIZE 20M;
       ```
 
    **Confirmation:**
@@ -149,7 +149,7 @@ After setting up a CDB and multiple PDBs, the next logical step in database admi
    2. Open a **SQL Worksheet** and execute:
    ```sql
    CREATE TEMPORARY TABLESPACE temp_CDBLAB
-   TEMPFILE '/u01/app/oracle/oradata/cdblab/temp_CDBLAB01.dbf' SIZE 10M;
+   TEMPFILE '/u01/app/oracle/oradata/CDBLAB/temp_CDBLAB01.dbf' SIZE 10M;
    ```
 
    **Using SQL*Plus:**
@@ -160,7 +160,7 @@ After setting up a CDB and multiple PDBs, the next logical step in database admi
    2. Execute:
       ```sql
       CREATE TEMPORARY TABLESPACE temp_CDBLAB
-      TEMPFILE '/u01/app/oracle/oradata/cdblab/temp_CDBLAB01.dbf' SIZE 10M;
+      TEMPFILE '/u01/app/oracle/oradata/CDBLAB/temp_CDBLAB01.dbf' SIZE 10M;
       ```
 
    **In a PDB (e.g., PDBLAB1):**
@@ -293,6 +293,4 @@ After setting up a CDB and multiple PDBs, the next logical step in database admi
 ## Summary:
 In this lab, you learned how to create and manage tablespaces within both CDB and PDB environments. You defined default tablespaces, created temporary tablespaces, and implemented Oracle Managed Files (OMF) for automated file management. These skills are crucial for managing storage within an Oracle Database environment.
 
----
 
-This detailed lab ensures that students have clear, step-by-step guidance on using both SQL Developer and SQL*Plus, with reduced tablespace sizes to accommodate the machine's limited storage.
