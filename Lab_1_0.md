@@ -32,8 +32,8 @@ To stop all running databases and listeners, create a new CDB named `CDBLAB` wit
    Make sure the `listener.ora` is created. If not, create it:
    ```sh
    cd ~/Desktop
-   git clone https://github.com/fenago/oracle19c-administration.git
-   cd ~/Desktop/oracle19c-administration
+   git clone https://github.com/fenago/Oracle19cDBA2.git
+   cd ~/Desktop/Oracle19cDBA2
 
    cp listener.ora /u01/app/oracle/product/19.3.0/dbhome_1/network/admin/
 

@@ -261,7 +261,7 @@ Yes, Oracle Database includes Oracle Enterprise Manager Database Express (EM Exp
 
    Make sure the `listener.ora` is created. If not, create it:
    ```sh
-   cd ~/Desktop/oracle19c-administration
+   cd ~/Desktop/Oracle19cDBA2
 
    cp listener.ora /u01/app/oracle/product/19.3.0/dbhome_1/network/admin/
   
