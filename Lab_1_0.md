@@ -1,4 +1,5 @@
-### Practice 5-1: Shutting Down and Starting Up the Oracle Database
+# Lab_1_0: Shutting Down and Starting Up the Oracle Database
+### Do Not Skip this Lab!
 
 #### Objective:
 To stop all running databases and listeners, create a new CDB named `CDBLAB` with three PDBs using DBCA, and ensure that all databases are running at the end of the practice.
