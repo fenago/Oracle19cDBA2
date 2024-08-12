@@ -1,7 +1,3 @@
-Certainly! I will integrate the changes, making steps 1 and 2 optional, and provide more detailed instructions on how to navigate both SQL Developer and SQL*Plus. Additionally, I will reduce the tablespace sizes to be more accommodating of limited disk space. Here’s the revised lab:
-
----
-
 # Lab_2_0: Creating and Managing Tablespaces
 
 ## Objectives:
