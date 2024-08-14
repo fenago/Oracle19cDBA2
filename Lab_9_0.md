@@ -64,6 +64,7 @@ Importing the data into `PDBLAB2` ensures that the same data is available across
 
 2. **Copy the Dump File to PDBLAB2:**
    - Ensure that the `pdb1_exp.dmp` file from `PDBLAB1` is accessible from `PDBLAB2` by copying it to the directory specified in `PDBLAB2`.
+   - Here is the copy:  `cp /u01/app/oracle/oradata/PDBLAB1/dpump/pdb1_exp.dmp /u01/app/oracle/oradata/PDBLAB2/dpump/pdb1_exp.dmp`
 
 3. **Import the Data Using Data Pump:**
    - Use the Data Pump `impdp` utility to import the data into `PDBLAB2`:
